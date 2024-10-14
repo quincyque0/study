@@ -1,0 +1,12 @@
+#include<stdio.h>
+
+int main(){
+int a,b,c,d,e;
+scanf("%d",&a);
+for(int c =1;c !=33;c++){
+   
+    a = a >> 1;
+    if (a&1==1)e=c;
+}
+printf("еденица на %d",e);
+}
