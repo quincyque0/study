@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main(){
+int e,bit,tb;
+char otv,a,b,c,k,cb;
+scanf("%d %d", &k , &a);
+e = 8-(k%8);
+b = a << e;
+c = a >> k;
+
+for (bit = 7;bit !=e;bit--){
+    cb = b >> bit;
+    tb = 1 & cb;
+    printf("%d",tb);
+}
+for (bit = e;bit !=-1;bit--){
+    cb = c >> bit;
+    tb = 1 & cb;
+    printf("%d",tb);
+}
+
+}
