@@ -1,0 +1,17 @@
+#include<stdio.h>
+#include<math.h>
+int appendelarray(int a,int b){
+    int array[6];
+    int c = 0;
+    if (a%2 == b%2) a++;
+    for(a,b;c!=5;a+=2,b+=3,c+=2){
+        array[c] = a;
+        array[c+1] =b;}
+    print_array(6,array);
+}
+
+int main(){
+    int a,b,c,k;
+scanf("%d %d",&a,&b);
+appendelarray(a,b);
+}
