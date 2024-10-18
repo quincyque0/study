@@ -1,17 +1,61 @@
 #include<stdio.h>
-#include<math.h>
-int appendelarray(int a,int b){
-    int array[6];
-    int c = 0;
-    if (a%2 == b%2) a++;
-    for(a,b;c!=5;a+=2,b+=3,c+=2){
-        array[c] = a;
-        array[c+1] =b;}
-    print_array(6,array);
-}
+void printarray(int n,int array[n]){
+    for (int i = 0;i < n;i++){
+    printf("%d ",array[i]);
+    }
+printf("\n");
 
+}
+void task4(int array1[12],int array2[12]){
+    int c[12]={};
+    int countmnimch = 0;
+    int maxch = 0;
+    float count = 0;
+    // суммирует мнимые и реальные числа в массив с
+    for (int i = 0;i<12;i+=2){
+        if(array1[i]%2 ==0){
+            c[i+1] += array1[i];
+            c[i] += array1[i+1];
+        }else{
+            c[i] += array1[i];
+            c[i+1] += array1[i+1];
+            }
+        if(array2[i]%2 ==0){
+            c[i+1] += array2[i];
+            c[i] += array2[i+1];
+        }else{
+            c[i] += array2[i];
+            c[i+1] += array2[i+1];
+            }
+        }
+
+    // ищет максимальное реальное в а и кол-во мнимых чисел в б
+    for (int i = 0;i <12;i++){
+        if(array2[i]%2==0)
+        {
+            if (array2[i] < 0)countmnimch+=1;
+        }
+        if(array1[i]%2!=0)
+        {
+            if(maxch < array1[i]) maxch =array1[i];
+        }
+    }
+    // ср арифм массива с
+    for (int i = 0;i<12;i++){
+        count += c[i];
+    }
+    // вывод 2 3 и 4 пункта
+    printf("massive c -");
+    printarray(12,c);
+    printf("max real - %d count mnim numbers - %d\n",maxch,countmnimch);
+    printf("midle arifm c - %.4f",count/(sizeof(c)/sizeof(c[0])));
+
+       
+        
+}
 int main(){
-    int a,b,c,k;
-scanf("%d %d",&a,&b);
-appendelarray(a,b);
+    //создание массивов и вызов функции
+    int komplex1[] = {2,-3,4,5,6,-7,8,9,-10,-11,12,13};
+    int komplex2[] = {14,13,6,-7,5,4,3,10,2,9,7,-20};
+    task4(komplex1,komplex2);
 }
