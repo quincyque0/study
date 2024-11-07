@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+//поиск определителя матрицы NxN
+double determinant(double **matrix, int n) {
+    double det = 0;
+    if (n == 1) {
+        return matrix[0][0];
+    } else if (n == 2) {
+        return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+    } else {
+        for (int i = 0; i < n; i++) {
+            double **temp =(double **)malloc((n-1)*sizeof(double *));
+            for (int j = 1; j < n; j++) {
+                //запись строк матрицы
+                temp[j-1] = (double *)malloc((n - 1) * sizeof(double));
+                for (int k = 0; k < n; k++) {
+                    //создание миноров
+                    if (k < i) {
+                        temp[j - 1][k] = matrix[j][k];
+                    } else if (k > i) {
+                        temp[j - 1][k - 1] = matrix[j][k];
+                    }
+                }
+            }
+            det += pow(-1, i) * matrix[0][i]*determinant(temp,n-1);
+             for (int j = 1; j < n; j++) {
+                free(temp[j-1]);}
+                
+
+        }
+    }
+
+    return det;
+}
+//поиск определителя
+// int main(){
+
+//     int n;
+//     printf("razmer");
+//     scanf("%d", &n);
+//     double **A = (double **)malloc(n * sizeof(double *));
+//      for (int i = 0; i < n; i++) {
+//         A[i] = (double *)malloc(n * sizeof(double));
+//     }
+//     //заполнение коофицентов матрицы
+//     printf("enter kooficent\n");
+//     for (int i = 0; i < n; i++) {
+//         for (int j = 0; j < n; j++) {
+//             scanf("%lf", &A[i][j]);
+//         }
+//     }
+//     double det= determinant(A,n);
+//     printf("%lf",det);
+// }
+
+
+
+
+int main(){
+    int n;
+    printf("razmer");
+    scanf("%d", &n);
+    double **A = (double **)malloc(n * sizeof(double *));
+     for (int i = 0; i < n; i++) {
+        A[i] = (double *)malloc(n * sizeof(double));
+    }
+    printf("enter kooficent\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%lf", &A[i][j]);
+        }
+    }
+    double det= determinant(A,n);
+
+    // printf("%lf\n",(determinant(A,n)));
+    printf("enter dopmatrix\n");
+    double *dopm = (double *) malloc(n * sizeof(double *));
+    for (int i = 0; i < n; i++) {
+        scanf("%lf",&dopm[i]);
+
+    }
+
+    double **tem =(double **)malloc((n)*sizeof(double *));
+    for (int j = 0; j < n; j++) {
+        tem[j] = (double *)malloc((n) * sizeof(double));
+        for (int k = 0; k < n; k++) {
+                  tem[j][k]= A[j][k];
+        }
+    }
+    for(int i =0;i<n;i++){
+        for(int j=0;j<n;j++){
+            tem[j][i] = dopm[j];
+            
+        }
+        printf("cof%d = %lf\t",i,determinant(tem,n)/det);
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                tem[j][k]= A[j][k];
+            }
+        }
+        
+    }
+}
