@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<string.h>
+void normprint(int u,char n[u],int length){
+    int c = 0;
+    for(int i=0;i<u;i++){
+        printf("%c",n[i]);
+        c+=1;
+        if(c == length){
+            c=0;
+            printf("-\n-");
+        }
+    }
+}
+void reversprint(int u,char n[u],int length){
+    int c = 0;
+    for(int i=u;i!=-1;i--){
+        printf("%c",n[i]);
+        c+=1;
+        if(c == length){
+            c=0;
+            printf("-\n-");
+        }
+    }
+    
+}
+void razdel(char g[]){
+    char *stry;
+    char split[] = " ";
+    stry = strtok(g,split);
+    char lastmp = stry[strlen(stry)-1];
+    char firxtmp = stry[0];
+    stry[0] = lastmp;
+    stry[strlen(stry)-1] = firxtmp;
+    while (stry != NULL)
+   {
+    printf ("%s ",stry);
+    stry = strtok(NULL,split);
+    char lastmp = stry[strlen(stry)-1];
+    char firxtmp = stry[0];
+    stry[0] = lastmp;
+    stry[strlen(stry)-1] = firxtmp;
+   }
+}
+char c[] = "phillip ayling walked with me to the london airport, but we ds at a building called phillip said that it was a filming location";
+int main(){
+// normprint(sizeof(c),c,100);
+// printf("%s",strtok(c," "));
+razdel(c);
+printf("\n%d",strlen("dee"));
+}
