@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+int** matrixscreate(int n){
+    int strv = 0;
+    int **matrix = (int**)calloc(1,n*sizeof(int * ));
+    for(int i =0;i < n;i++){
+        int *r = (int*)calloc(1,n*sizeof(int));
+        for(int j =0;j < n;j++){
+            r[j] =0;
+        }
+        matrix[i] = r;
+    }
+    return matrix;
+   } 
+int matrixzap(int **matrix,int n){
+    int cnt = 1;
+    int rightmin = 0;
+    int leftmin = 0;
+    int upmin=0;
+    int downmin=0;
+    while (cnt-1 !=(n*n)){
+        if(cnt-1 !=(n*n)){
+
+            for(int i =leftmin;i < n-rightmin;i++){
+                    matrix[upmin][i] = cnt++;
+            }
+            upmin +=1;
+
+        }
+        if(cnt -1!=(n*n)){
+            for(int j = upmin;j < n-downmin;j++){
+                    matrix[j][n-1-rightmin] = cnt++;
+            }
+            rightmin +=1;
+        }
+        if(cnt-1 !=(n*n)){
+            for(int k = n -1 - rightmin;k >leftmin-1;k--){
+                    matrix[n-1-downmin][k] = cnt++;
+            }
+            downmin +=1;
+        }
+        if(cnt-1 !=(n*n)){
+            for(int w = n -1 - downmin;w >upmin-1;w--){
+                    matrix[w][leftmin] = cnt++;
+            }
+            leftmin +=1;
+        }
+
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            printf("%d\t",matrix[i][j]);
+        }
+        printf("\n");
+    }
+}void printmatrix(int n,int **matrix)
+{
+    for(int i =0 ;i <n;i++)
+    {
+        
+        for(int j =0;j<n;j++)
+        {
+            printf("%d ",matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+}
+
+
+
+int main(){
+    printf("n for  matrix\n");
+    int n ;
+    scanf("%d",&n);
+    int **matrix = matrixscreate(n);
+    matrixzap(matrix,n);
+
+}
