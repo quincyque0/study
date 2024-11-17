@@ -1,0 +1,138 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+double** matrixscreate(int n){
+    int r;
+    printf("(input from the keyboard, enter 1) if the random numbers are any other symbol\n");
+    scanf("%d",&r);
+    while (n<=0) {
+        if (scanf("%d", &n) != 1) {
+            printf("wrong enter ");
+            while (getchar() != '\n'); 
+        } else {
+            break;
+        }}
+    double a = 0;
+    int c = 0;
+    double **matrix = (double**)calloc(1,n*sizeof(double *));
+    if (matrix == NULL){
+        return 0;
+    }
+    int cnt = 1;
+    for(int i= 0;i<n;i++)
+        {
+            double *tmp = (double*)calloc(1,n*sizeof(double));
+            if (tmp == NULL){
+                return 0;
+            }
+            for(int j =0;j<n;j++)
+            {   c+=1;
+                if(r == 1){
+                    printf("enter elem %d\n",c);
+                    while (a==0) {
+                        if (scanf("%lf", &a) <= 0) {
+                        printf("wrong enter ");
+                        while (getchar() != '\n'); 
+                    }
+                    else {
+                        break;
+                    }
+                }
+                    tmp[j]= a;
+                    a= 0;
+                }
+                else {tmp[j] =rand()%1000;}
+            }
+            matrix[i]=tmp;
+        }
+    return matrix;
+}
+
+void printmatrix(int n,double **matrix)
+{
+    for(int i =0 ;i <n;i++)
+    {
+        
+        for(int j =0;j<n;j++)
+        {
+            printf("%0.2lf\t",matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+}
+// int mod(int n){
+//     if( n > 0){
+//         n = n*-1;
+//     }
+//     return n;
+// }
+int dople(int n){
+    int count = 0;
+    for(int i=n;i !=1;i-=2)
+    count +=i-2;
+    return count;
+
+}
+double* rightelements(int n,double **matrix){
+    double *C = (double*)malloc(dople(n)*sizeof(double));
+    int count = 0;
+    int otrez = n/2-1;
+
+    for(int i =1 ;i <n/2;i++)
+    {
+        for(int j =n/2;j !=otrez;j--)
+        {
+            C[count++] = matrix[i][n/2+j];
+            C[count++] = matrix[n-1-i][n/2+j];
+        }
+        otrez -= 1;
+    }
+    for(int j =(n/2)+1;j != n;j++)
+        {
+            for (int j = n / 2 + 1; j < n; j++) 
+            {
+            C[count++] = matrix[n / 2][j];
+            }
+
+        }
+    return  C;
+}
+void printarray(int n ,double array[dople(n)]){
+    for (int i = 0;i <dople(n);i++){
+    printf("%lf ",array[i]);
+    }
+}
+double summelemins(int n ,double array[dople(n)], double **matrix){
+    double summ = 0;
+    for (int i = 0;i <dople(n);i++){
+        if (array[i] < matrix[n/2][n/2]){
+            summ += array[i];
+            // printf("%lf%lf",array[i],matrix[n/2][n/2]);
+        }
+    }
+    return summ;
+}
+int main(){
+    srand(time(NULL));
+    printf("enter matrix size ,n can accept meaning (3 + x*2)\n");
+    
+    int n=0;
+    while (n<=0) {
+        if (scanf("%d", &n) != 1) {
+            printf("wrong enter ");
+            while (getchar() != '\n'); 
+        } else {
+            break;
+        }
+    }
+double **matrix1 = matrixscreate(n);
+printmatrix(n,matrix1);
+printarray(n,rightelements(n,matrix1));
+printf("\n%lf",summelemins(n,rightelements(n,matrix1),matrix1));
+for (int i = 0; i < n; i++) {
+        free(matrix1[i]);
+    }
+free(matrix1);
+
+}
