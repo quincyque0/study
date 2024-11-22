@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <math.h>
+
+int countn(double x){
+    int n=1 ;
+    int summ = 0;
+    while (0.0005<fabs(x)){
+        n++;
+        x = pow(-1,n)*((pow(x,n*2-1))/(2*n-1));
+    }
+    return n;
+
+}
+double hardfunc(double x,int n){
+    if (n == 0) return 0.0;
+    double znach,a;
+    double term = pow(-1, n - 1) * pow(x, 2 * n - 1) / (2 * n - 1);
+    return term + hardfunc(x, n - 1); 
+}
+int main(){
+    double x=3;
+    while (x>1 || x <-1 ) {
+        printf("enter -1 <= x <= 1");
+        if (scanf("%lf", &x) != 1) {
+            printf("wrong enter ");
+            while (getchar() != '\n'); 
+        } else {
+            break;
+        }
+    }
+    printf("%lf\n",(hardfunc(x,countn(1))));
+}
