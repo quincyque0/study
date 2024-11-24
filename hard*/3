@@ -1,0 +1,110 @@
+#include <stdio.h>
+#include <math.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+
+char** recall( char stroke[]){
+    int cnt =0;
+    char **ptr = (char**)malloc(sizeof(char*)*(strlen(stroke)+1));
+    if (ptr == NULL) 
+    {
+        perror("Ошибка выделения памяти 1 ");
+        exit(1); 
+    }
+    char *tok = strtok(stroke,",");
+    while (tok != NULL) 
+    {
+        int toklen = strlen(tok);
+        ptr[cnt] = (char*)malloc(sizeof(char) * (toklen + 1)); 
+        if (ptr[cnt] == NULL) 
+        {
+            perror("Ошибка выделения памяти 2 ");                
+            exit(1);
+        }
+        strcpy(ptr[cnt++], tok);
+        tok = strtok(NULL, ",");
+    }
+    ptr[cnt] = NULL;
+    return ptr;
+    
+}
+int* stringderate(char *matel){
+    int a1=0,a2=10,cnt=0;
+    char *found = strchr(matel, '-');
+    if(found!=0){
+        int len = strlen(matel)-1;
+        if(matel!=NULL){
+            char *token = strtok(matel,"-");
+            a1 = atoi(token);
+            token =strtok(NULL,"-");
+            a2 =atoi(strtok(token,"-"));
+            
+        }
+        if (a2-a1 <1) exit(1);
+        int *numbers = (int*)calloc(a2-a1+1,sizeof(int));
+        for(int i = a1;i<a2+1;i++){
+            numbers[cnt++] = i;
+        }
+            numbers[cnt] = 0;
+        return numbers;
+
+    }
+    else
+    {
+        int *numbers = (int*)calloc(2,sizeof(int));
+        numbers[0] = atoi(matel);
+        numbers[1] = 0;
+        return numbers;
+    }
+
+}
+int check(int *massive){
+    int cnt =0;
+    int tmp =0;
+    for(int i=0;massive[i]!=0;i++){
+        if(massive[i] < tmp){
+            perror("Неверный ввод");    
+            exit(1);
+        }
+        tmp = massive[i];
+
+    }
+    return 1;
+}
+int main (){
+    int cnt =0;
+    char enter[256] = {};
+    scanf("%s",&enter);
+    if(enter == NULL)
+        {
+            perror("Неверный ввод");    
+            exit(1);
+        }
+    int *otvet = (int*)calloc(200,sizeof(int));
+    char **result = recall(enter);
+    for(int i =0;result[i]!=0;i++)
+    {
+        int *tmp = stringderate(result[i]);
+        for(int j =0;tmp[j]!=0;j++){
+            otvet[cnt++] = tmp[j];
+        }
+        free(tmp);
+    }
+    check(otvet);
+    for(int i =0;otvet[i]!=0;i++){
+        printf("%d ",otvet[i]);
+    }
+     free(otvet);
+     for (int i = 0; result[i] != NULL; i++) {
+        free(result[i]);
+    }
+    free(result);
+ 
+   
+
+    
+} 
