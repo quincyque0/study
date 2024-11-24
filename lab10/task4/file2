@@ -1,0 +1,25 @@
+#include "firstkomp.h"
+
+double min(double *spis, int n) {
+    double tmp = 1000000;
+    for (int i = 0; i < n; i++) {
+        if (spis[i] < tmp) {
+            tmp = spis[i];
+        }
+    }
+    return tmp;
+}
+
+double max(double *spis, int n) {
+    double tmp = -1000000;
+    for (int i = 0; i < n; i++) {
+        if (spis[i] > tmp) {
+            tmp = spis[i];
+        }
+    }
+    return tmp;
+}
+
+double module(struct Complex z) {
+    return sqrt(z.x * z.x + z.y * z.y);
+}
