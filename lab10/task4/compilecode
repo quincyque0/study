@@ -1,2 +1,2 @@
-gcc -c functions.c -o functions.o
-gcc main.c functions.o -o main -lm
+gcc -c functions.c -o fk
+gcc main.c fk -o start -lm
