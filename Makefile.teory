@@ -1,0 +1,69 @@
+# Переменные
+EXECUTABLE = myprogram
+OBJECTS = main.o utils.o
+SOURCES = main.c utils.c
+HEADERS = complex.h
+CFLAGS = -Wall -g -O2 -std=c99
+LDFLAGS = -lm # Для математической библиотеки
+
+# Условные директивы (пример)
+ifeq ($(OS),Windows_NT)
+  EXECUTABLE = myprogram.exe
+  RM = del /f /q
+else
+  RM = rm -f
+endif
+
+# Правило для создания исполняемого файла
+$(EXECUTABLE): $(OBJECTS) $(HEADERS)
+	gcc $(CFLAGS) $(LDFLAGS) -o $@ $^
+
+# Шаблонное правило для компиляции объектных файлов
+%.o: %.c $(HEADERS)
+	gcc $(CFLAGS) -c $< -o $@
+
+# Правило для очистки
+clean:
+	$(RM) $(EXECUTABLE) $(OBJECTS)
+
+# Правило для запуска программы
+run: $(EXECUTABLE)
+	./$(EXECUTABLE)
+
+# Правило для создания документации (пример)
+docs:
+	@echo "Создать документацию - добавить здесь команды doxygen или Sphinx"
+
+# Пример phony-цели. Не создает файла, только выполняет действия.
+.PHONY: clean docs run
+
+# Условные правила (пример)
+DEBUG = 0
+ifeq ($(DEBUG),1)
+	CFLAGS += -DDEBUG
+endif
+
+
+#Дополнительные правила
+install: $(EXECUTABLE)
+	@echo "Установка программы в /usr/local/bin" #Замените на реальный путь
+	sudo cp $(EXECUTABLE) /usr/local/bin
+
+
+uninstall:
+	@echo "Удаление программы из /usr/local/bin" #Замените на реальный путь
+	sudo rm /usr/local/bin/$(EXECUTABLE)
+
+
+#Пример использования переменной SOURCES для построения всех объектов
+all: $(EXECUTABLE)
+
+
+#Для автоматической зависимости от заголовочных файлов (более сложный пример):
+-include $(wildcard *.d) # Добавляет автоматическую зависимость от .d файлов (генерируются при компиляции)
+
+%.d: %.c
+	@set -e; rm -f $@; \
+	$(CC) -MM $(CFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
