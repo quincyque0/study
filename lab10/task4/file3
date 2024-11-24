@@ -1,0 +1,36 @@
+#include "firstkomp.h"
+
+
+int main() {
+    int n;
+    printf("Введите количество комплексных чисел ");
+    scanf("%d", &n);
+
+    while (n <= 0) {
+        printf("Количество чисел должно быть больше 0\n");
+        scanf("%d", &n);
+    }
+
+    struct Complex *numbers = (struct Complex*)malloc(n * sizeof(struct Complex));
+    if (numbers == NULL) {
+        perror("Ошибка выделения памяти");
+        exit(1);
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("Введите действительную и мнимую части числа %d (x y): ", i+1);
+        scanf("%lf %lf", &numbers[i].x, &numbers[i].y);
+    }
+
+    double *spis = (double*)calloc(n,sizeof(double));
+
+    for(int i =0;i<n;i++){
+        spis[i] = module(numbers[i]);
+    }
+    printf("\nминимальное : (%.2lf)",min(spis,n));
+    printf("\nмаксимальное : (%.2lf)",max(spis,n));
+    free(numbers); 
+    free(spis);
+
+    return 0;
+}
