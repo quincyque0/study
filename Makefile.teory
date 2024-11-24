@@ -1,10 +1,11 @@
 # Переменные
+# Простое присваивание
 EXECUTABLE = myprogram
-OBJECTS = main.o utils.o
-SOURCES = main.c utils.c
-HEADERS = complex.h
-CFLAGS = -Wall -g -O2 -std=c99
-LDFLAGS = -lm # Для математической библиотеки
+CFLAGS = -Wall -O2 -g # Флаги компиляции
+LDFLAGS = -lm  # Флаги компоновщика (для математической библиотеки)
+SOURCES = main.c utils.c # Исходные файлы
+OBJECTS = $(patsubst %.c,%.o,$(SOURCES)) # Преобразование .c в .o с помощью функции patsubst
+HEADERS = complex.h # Заголовочные файлы
 
 # Условные директивы (пример)
 ifeq ($(OS),Windows_NT)
