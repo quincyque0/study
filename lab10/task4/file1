@@ -1,0 +1,16 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <math.h>
+
+struct Complex {
+    double x;
+    double y;
+};
+
+double module(struct Complex z);
+double min(double *spis, int n);
+double max(double *spis, int n);
+
