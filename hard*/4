@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+int* printer(int *massive,int n){
+    for(int i =0;i < n;i++){
+        printf("%d\t",massive[i]);
+    }
+}
+int* boublesort(int *bars, int n)
+{
+    int tmp;
+    for (int b = 0; b < n; b++)
+    {
+        for (int i = 1; i < n; i++)
+        {
+            if (bars[i] > bars[i - 1])
+            {
+                tmp = bars[i];
+                bars[i] = bars[i - 1];
+                bars[i - 1] = tmp;
+            }
+        }
+    }
+}
+int maxim(int capacity, int *bars,int n)
+{
+    int tcnt = 0;
+    for (int j = 0; j < n; j++)
+    {
+        int cnt = 0;
+        for (int i = j; i < n; i++)
+        {
+            if (capacity - cnt - bars[i] >= 0)
+            {
+                cnt += bars[i];
+            }
+        }
+        if(cnt > tcnt) tcnt = cnt;
+    }
+    return tcnt;
+}
+int main()
+{
+
+    int capacity = -1, quantity = -1;
+    printf("вместимость рюкзака и кол-во слитков");
+    while (1)
+    {
+        if (scanf("%d %d", &capacity, &quantity) == 2)
+        {
+            if (capacity > -1 && quantity > -1)
+                break;
+            else
+                printf("вместимость и кол-во слитков >=0\n ");
+        }
+        else
+        {
+            printf("неверный ввод\n");
+            while (getchar() != '\n')
+                ;
+        }
+    }
+    int *bars = (int *)calloc(quantity, sizeof(int)), tmp = 0;
+    for (int i = 0; i < quantity; i++)
+    {
+        while (1)
+        {
+            if (scanf("%d", &tmp) == 1)
+            {
+                if (tmp > 0)
+                    break;
+            }
+            else
+            {
+                printf("неверный ввод\n");
+                while (getchar() != '\n')
+                    ;
+            }
+        }
+        bars[i] = tmp;
+    }
+    int *test = (int*)calloc(6,4);
+    test[0] = 5;test[1] = 23;test[2] = 15;test[3] = 70;test[4] = 1;test[5] = 45;
+    // printf("%d",maxim(capacity,boublesort(bars)));
+    boublesort(test,quantity);
+    // printer(maxim(capacity,test,quantity),quantity);
+    printf("%d",maxim(capacity,bars,quantity));
+    
+}
